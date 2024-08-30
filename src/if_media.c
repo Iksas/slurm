@@ -14,15 +14,15 @@
 #endif
 
 #if defined (__OpenBSD__) || defined (__NetBSD__) || defined (__MicroBSD__) || defined (__APPLE__)
-#define NON_FreeBSD 1
-#define WIRELESS 1
+#define NON_FreeBSD (1)
+#define WIRELESS (1)
 #else
 #if defined(__FreeBSD__)
 #if (__FreeBSD_version >= 450000)
-#define WIRELESS 1
+#define WIRELESS (1)
 #endif
 #else
-#define WIRELESS 0
+#define WIRELESS (0)
 #endif
 #endif
 
