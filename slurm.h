@@ -158,16 +158,18 @@ static FILE *proc_net_dev;
 #endif
 /* End of Variables Declarations */
 
-/* define graph height for split screen graphs */
-#define GRAPHSPLIT_HEIGHT 6
-#define GRAPHSPLIT_WIDTH 77
-
-#define GRAPHCOMBINED_WIDTH 77
-#define GRAPHCOMBINED_HEIGHT 12
-
-/* new max height */
+/* new max width and height */
+/* Note that these first two constants are used to define array sizes, 
+ * so they must be larger/equal to all other heights/widths. */
 #define GRAPH_HEIGHT 12
 #define GRAPH_WIDTH 77
+
+/* define graph height for split screen graphs */
+#define GRAPHSPLIT_HEIGHT 6
+#define GRAPHSPLIT_WIDTH GRAPH_WIDTH
+
+#define GRAPHCOMBINED_HEIGHT GRAPH_HEIGHT
+#define GRAPHCOMBINED_WIDTH GRAPH_WIDTH
 
 /* large split mode graph height */
 #define GRAPHLARGE_HEIGHT 11
