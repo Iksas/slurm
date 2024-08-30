@@ -379,7 +379,7 @@ int update_stat_large(void)
         /* max speed calculation has to be redone */
         for (i = 0; i < GRAPH_WIDTH; i++) {
             if (rx_speedarray[i] > tmp_maxspeed) {
-                tmp_maxspeed = rx_speedarray[1];
+                tmp_maxspeed = rx_speedarray[i];
                 tmp_maxspeedpos = i;
             }
         }
@@ -394,7 +394,7 @@ int update_stat_large(void)
         /* max speed calculation has to be redone */
         for (i = 0; i < GRAPH_WIDTH; i++) {
             if (tx_speedarray[i] > tmp_maxspeed) {
-                tmp_maxspeed = tx_speedarray[1];
+                tmp_maxspeed = tx_speedarray[i];
                 tmp_maxspeedpos = i;
             }
         }
@@ -665,7 +665,7 @@ int update_stat_split(void)
         /* max speed calculation has to be redone */
         for (i = 0; i < GRAPHSPLIT_WIDTH; i++) {
             if (rx_speedarray[i] > tmp_maxspeed) {
-                tmp_maxspeed = rx_speedarray[1];
+                tmp_maxspeed = rx_speedarray[i];
                 tmp_maxspeedpos = i;
             }
         }
@@ -680,7 +680,7 @@ int update_stat_split(void)
         /* max speed calculation has to be redone */
         for (i = 0; i < GRAPHSPLIT_WIDTH; i++) {
             if (tx_speedarray[i] > tmp_maxspeed) {
-                tmp_maxspeed = tx_speedarray[1];
+                tmp_maxspeed = tx_speedarray[i];
                 tmp_maxspeedpos = i;
             }
         }
@@ -922,7 +922,7 @@ int update_stat_combined(void)
         /* max speed calculation has to be redone */
         for (i = 0; i < GRAPHCOMBINED_WIDTH; i++) {
             if (rx_speedarray[i] > tmp_maxspeed) {
-                tmp_maxspeed = rx_speedarray[1];
+                tmp_maxspeed = rx_speedarray[i];
                 tmp_maxspeedpos = i;
             }
         }
