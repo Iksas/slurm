@@ -410,7 +410,7 @@ int update_stat_large(void)
      */
 
     /* move */
-    for (x = GRAPH_WIDTH - 1; x >= 0; x--) {
+    for (x = GRAPH_WIDTH - 1; x >= 1; x--) {
         rx_speedarray[x] = rx_speedarray[x - 1];
         tx_speedarray[x] = tx_speedarray[x - 1];
         for (y = 0; y < GRAPHLARGE_HEIGHT; y++) {
@@ -696,7 +696,7 @@ int update_stat_split(void)
      */
 
     /* move */
-    for (x = GRAPHSPLIT_WIDTH - 1; x >= 0; x--) {
+    for (x = GRAPHSPLIT_WIDTH - 1; x >= 1; x--) {
         rx_speedarray[x] = rx_speedarray[x - 1];
         tx_speedarray[x] = tx_speedarray[x - 1];
         for (y = 0; y < GRAPHSPLIT_HEIGHT; y++) {
@@ -942,7 +942,7 @@ int update_stat_combined(void)
      */
 
     /* move */
-    for (x = GRAPHCOMBINED_WIDTH - 1; x >= 0; x--) {
+    for (x = GRAPHCOMBINED_WIDTH - 1; x >= 1; x--) {
         rx_speedarray[x] = rx_speedarray[x - 1];
         tx_speedarray[x] = tx_speedarray[x - 1];
         for (y = 0; y < GRAPHCOMBINED_HEIGHT; y++) {
