@@ -162,7 +162,7 @@ static FILE *proc_net_dev;
 /* Note that these first two constants are used to define array sizes, 
  * so they must be larger/equal to all other heights/widths. */
 #define GRAPH_HEIGHT (12)
-#define GRAPH_WIDTH (77)
+#define GRAPH_WIDTH (78)
 
 /* define graph height for split screen graphs */
 #define GRAPHSPLIT_HEIGHT (6)
