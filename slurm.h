@@ -158,10 +158,6 @@ static FILE *proc_net_dev;
 #endif
 /* End of Variables Declarations */
 
-/* max speed in graph */
-#define GRAPHSINGLE_WIDTH 77
-#define GRAPHSINGLE_HEIGHT 10
-
 /* define graph height for split screen graphs */
 #define GRAPHSPLIT_HEIGHT 6
 #define GRAPHSPLIT_WIDTH 77
