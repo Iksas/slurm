@@ -270,7 +270,7 @@ int get_if_speed(char *ifstring)
                         if (if_buf->ifOper == 1)
                             speed = if_buf->ifSpeed / 1000;
                         else
-                            speed ERR_IFACE_DOWN;
+                            speed = ERR_IFACE_DOWN;
                 }
             }
         }
