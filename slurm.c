@@ -345,63 +345,6 @@ int update_stat_large(void)
             tx_overallmax = txspeed;
     }
 
-    /*
-     * update the Graph Top Speed field
-     * as it might be shorter than before just be sure to not leave
-     * trailing garbage by printing spaces
-     */
-
-    if (rx_scalechanged) {
-        snprintf(draw, DRAWLEN - 1, "%.2f KB/s",
-                 (float) rx_maxspeed / 1024);
-        strncat(draw, "               ", DRAWLEN - strlen(draw));
-        mvprintw(22, 24, "%s", draw);
-    }
-    if (tx_scalechanged) {
-        snprintf(draw, DRAWLEN - 1, "%.2f KB/s",
-                 (float) tx_maxspeed / 1024);
-        strncat(draw, "               ", DRAWLEN - strlen(draw));
-        mvprintw(22, 65, "%s", draw);
-    }
-
-
-    /* increment position of max speed as we move the graph */
-    rx_maxspeedpos++;
-    tx_maxspeedpos++;
-
-    /* check if max speed has to be lowered for the graph as the max speed
-     * was reached too long ago
-     */
-
-    tmp_maxspeed = 0;
-    tmp_maxspeedpos = 1;
-    if (rx_maxspeedpos >= GRAPH_WIDTH) {
-        /* max speed calculation has to be redone */
-        for (i = 0; i < GRAPH_WIDTH; i++) {
-            if (rx_speedarray[i] > tmp_maxspeed) {
-                tmp_maxspeed = rx_speedarray[i];
-                tmp_maxspeedpos = i;
-            }
-        }
-        /* set new values */
-        rx_maxspeed = tmp_maxspeed;
-        rx_maxspeedpos = tmp_maxspeedpos;
-    }
-
-    tmp_maxspeed = 0;
-    tmp_maxspeedpos = 1;
-    if (tx_maxspeedpos >= GRAPH_WIDTH) {
-        /* max speed calculation has to be redone */
-        for (i = 0; i < GRAPH_WIDTH; i++) {
-            if (tx_speedarray[i] > tmp_maxspeed) {
-                tmp_maxspeed = tx_speedarray[i];
-                tmp_maxspeedpos = i;
-            }
-        }
-        /* set new values */
-        tx_maxspeed = tmp_maxspeed;
-        tx_maxspeedpos = tmp_maxspeedpos;
-    }
 
     /* prepare the graph array
      *
@@ -443,6 +386,67 @@ int update_stat_large(void)
     if (0 != (int) txspeed)
         tx_graph[0][1] = 1;
     tx_speedarray[0] = txspeed;
+
+
+    /* increment position of max speed as we moved the graph */
+    rx_maxspeedpos++;
+    tx_maxspeedpos++;
+
+    /* check if max speed has to be lowered for the graph as the max speed
+     * was reached too long ago
+     */
+
+    tmp_maxspeed = 0;
+    tmp_maxspeedpos = 1;
+    if (rx_maxspeedpos >= (GRAPH_WIDTH-1)) {
+        /* max speed calculation has to be redone */
+        for (i = 0; i < GRAPH_WIDTH; i++) {
+            if (rx_speedarray[i] > tmp_maxspeed) {
+                tmp_maxspeed = rx_speedarray[i];
+                tmp_maxspeedpos = i;
+            }
+        }
+        /* set new values */
+        rx_maxspeed = tmp_maxspeed;
+        rx_maxspeedpos = tmp_maxspeedpos;
+        rx_scalechanged++;
+    }
+
+    tmp_maxspeed = 0;
+    tmp_maxspeedpos = 1;
+    if (tx_maxspeedpos >= (GRAPH_WIDTH-1)) {
+        /* max speed calculation has to be redone */
+        for (i = 0; i < GRAPH_WIDTH; i++) {
+            if (tx_speedarray[i] > tmp_maxspeed) {
+                tmp_maxspeed = tx_speedarray[i];
+                tmp_maxspeedpos = i;
+            }
+        }
+        /* set new values */
+        tx_maxspeed = tmp_maxspeed;
+        tx_maxspeedpos = tmp_maxspeedpos;
+        tx_scalechanged++;
+    }
+
+    /*
+     * update the Graph Top Speed field
+     * as it might be shorter than before just be sure to not leave
+     * trailing garbage by printing spaces
+     */
+
+    if (rx_scalechanged) {
+        snprintf(draw, DRAWLEN - 1, "%.2f KB/s",
+                 (float) rx_maxspeed / 1024);
+        strncat(draw, "               ", DRAWLEN - strlen(draw));
+        mvprintw(22, 24, "%s", draw);
+    }
+    if (tx_scalechanged) {
+        snprintf(draw, DRAWLEN - 1, "%.2f KB/s",
+                 (float) tx_maxspeed / 1024);
+        strncat(draw, "               ", DRAWLEN - strlen(draw));
+        mvprintw(22, 65, "%s", draw);
+    }
+
 
     /*
      * rescale graph
@@ -633,62 +637,6 @@ int update_stat_split(void)
         }
     }
 
-    /*
-     * update the Graph Top Speed field
-     * as it might be shorter than before just be sure to not leave
-     * trailing garbage by printing spaces
-     */
-
-    if (rx_scalechanged) {
-        snprintf(draw, DRAWLEN - 1, "%.2f KB/s", rx_maxspeed / 1024);
-        strncat(draw, "               ", DRAWLEN - strlen(draw));
-        mvprintw(18, 24, "%s", draw);
-    }
-    if (tx_scalechanged) {
-        snprintf(draw, DRAWLEN - 1, "%.2f KB/s", tx_maxspeed / 1024);
-        strncat(draw, "               ", DRAWLEN - strlen(draw));
-        mvprintw(18, 65, "%s", draw);
-    }
-
-
-    /* increment position of max speed as we move the graph */
-    rx_maxspeedpos++;
-    tx_maxspeedpos++;
-
-    /* check if max speed has to be lowered for the graph as the max speed
-     * was reached too long ago
-     */
-
-    tmp_maxspeed = 0;
-    tmp_maxspeedpos = 1;
-    if (rx_maxspeedpos >= GRAPHSPLIT_WIDTH) {
-        /* max speed calculation has to be redone */
-        for (i = 0; i < GRAPHSPLIT_WIDTH; i++) {
-            if (rx_speedarray[i] > tmp_maxspeed) {
-                tmp_maxspeed = rx_speedarray[i];
-                tmp_maxspeedpos = i;
-            }
-        }
-        /* set new values */
-        rx_maxspeed = tmp_maxspeed;
-        rx_maxspeedpos = tmp_maxspeedpos;
-    }
-
-    tmp_maxspeed = 0;
-    tmp_maxspeedpos = 1;
-    if (tx_maxspeedpos >= GRAPHSPLIT_WIDTH) {
-        /* max speed calculation has to be redone */
-        for (i = 0; i < GRAPHSPLIT_WIDTH; i++) {
-            if (tx_speedarray[i] > tmp_maxspeed) {
-                tmp_maxspeed = tx_speedarray[i];
-                tmp_maxspeedpos = i;
-            }
-        }
-        /* set new values */
-        tx_maxspeed = tmp_maxspeed;
-        tx_maxspeedpos = tmp_maxspeedpos;
-    }
-
     /* prepare the graph array
      *
      * shift the graph to the left and then add the last entry
@@ -729,6 +677,64 @@ int update_stat_split(void)
     if (0 != (int) txspeed)
         tx_graph[0][1] = 1;
     tx_speedarray[0] = txspeed;
+
+    /* increment position of max speed as we moved the graph */
+    rx_maxspeedpos++;
+    tx_maxspeedpos++;
+
+    /* check if max speed has to be lowered for the graph as the max speed
+     * was reached too long ago
+     */
+
+    tmp_maxspeed = 0;
+    tmp_maxspeedpos = 1;
+    if (rx_maxspeedpos >= GRAPHSPLIT_WIDTH) {
+        /* max speed calculation has to be redone */
+        for (i = 0; i < GRAPHSPLIT_WIDTH; i++) {
+            if (rx_speedarray[i] > tmp_maxspeed) {
+                tmp_maxspeed = rx_speedarray[i];
+                tmp_maxspeedpos = i;
+            }
+        }
+        /* set new values */
+        rx_maxspeed = tmp_maxspeed;
+        rx_maxspeedpos = tmp_maxspeedpos;
+        rx_scalechanged++;
+    }
+
+    tmp_maxspeed = 0;
+    tmp_maxspeedpos = 1;
+    if (tx_maxspeedpos >= GRAPHSPLIT_WIDTH) {
+        /* max speed calculation has to be redone */
+        for (i = 0; i < GRAPHSPLIT_WIDTH; i++) {
+            if (tx_speedarray[i] > tmp_maxspeed) {
+                tmp_maxspeed = tx_speedarray[i];
+                tmp_maxspeedpos = i;
+            }
+        }
+        /* set new values */
+        tx_maxspeed = tmp_maxspeed;
+        tx_maxspeedpos = tmp_maxspeedpos;
+        tx_scalechanged++;
+    }
+
+    /*
+     * update the Graph Top Speed field
+     * as it might be shorter than before just be sure to not leave
+     * trailing garbage by printing spaces
+     */
+
+    if (rx_scalechanged) {
+        snprintf(draw, DRAWLEN - 1, "%.2f KB/s", rx_maxspeed / 1024);
+        strncat(draw, "               ", DRAWLEN - strlen(draw));
+        mvprintw(18, 24, "%s", draw);
+    }
+    if (tx_scalechanged) {
+        snprintf(draw, DRAWLEN - 1, "%.2f KB/s", tx_maxspeed / 1024);
+        strncat(draw, "               ", DRAWLEN - strlen(draw));
+        mvprintw(18, 65, "%s", draw);
+    }
+
 
     /*
      * rescale graph
@@ -897,39 +903,6 @@ int update_stat_combined(void)
         }
     }
 
-    /*
-     * update the Graph Top Speed field
-     * as it might be shorter than before just be sure to not leave
-     * trailing garbage by printing spaces
-     */
-
-    if (rx_scalechanged) {
-        snprintf(draw, DRAWLEN - 1, "%.2f KB/s", comb_maxspeed / 1024);
-        strncat(draw, "               ", DRAWLEN - strlen(draw));
-        mvprintw(19, 24, "%s", draw);
-    }
-
-    /* increment position of max speed as we move the graph */
-    rx_maxspeedpos++;
-
-    /* check if max speed has to be lowered for the graph as the max speed
-     * was reached too long ago
-     */
-
-    tmp_maxspeed = 0;
-    tmp_maxspeedpos = 1;
-    if (rx_maxspeedpos >= GRAPHCOMBINED_WIDTH) {
-        /* max speed calculation has to be redone */
-        for (i = 0; i < GRAPHCOMBINED_WIDTH; i++) {
-            if (rx_speedarray[i] > tmp_maxspeed) {
-                tmp_maxspeed = rx_speedarray[i];
-                tmp_maxspeedpos = i;
-            }
-        }
-        /* set new values */
-        comb_maxspeed = tmp_maxspeed;
-        rx_maxspeedpos = tmp_maxspeedpos;
-    }
 
     /* prepare the graph array
      *
@@ -965,6 +938,43 @@ int update_stat_combined(void)
 
     rx_speedarray[0] = rxspeed;
     tx_speedarray[0] = txspeed;
+
+
+    /* increment position of max speed as we moved the graph */
+    rx_maxspeedpos++;
+
+    /* check if max speed has to be lowered for the graph as the max speed
+     * was reached too long ago
+     */
+
+    tmp_maxspeed = 0;
+    tmp_maxspeedpos = 1;
+    if (rx_maxspeedpos >= (GRAPHCOMBINED_WIDTH-1)) {
+        /* max speed calculation has to be redone */
+        for (i = 0; i < GRAPHCOMBINED_WIDTH; i++) {
+            if (rx_speedarray[i] > tmp_maxspeed) {
+                tmp_maxspeed = rx_speedarray[i];
+                tmp_maxspeedpos = i;
+            }
+        }
+        /* set new values */
+        comb_maxspeed = tmp_maxspeed;
+        rx_maxspeedpos = tmp_maxspeedpos;
+        rx_scalechanged++;
+    }
+
+    /*
+     * update the Graph Top Speed field
+     * as it might be shorter than before just be sure to not leave
+     * trailing garbage by printing spaces
+     */
+
+    if (rx_scalechanged) {
+        snprintf(draw, DRAWLEN - 1, "%.2f KB/s", comb_maxspeed / 1024);
+        strncat(draw, "               ", DRAWLEN - strlen(draw));
+        mvprintw(19, 24, "%s", draw);
+    }
+
 
     /*
      * rescale graph
